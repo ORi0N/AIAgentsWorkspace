@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dino Collector Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="start-screen" id="startScreen">
+            <h1>Dino Collector</h1>
+            <p>Collect all objects while avoiding obstacles!</p>
+            <button id="startButton">Start Game</button>
+        </div>
+        
+        <div class="game-ui" id="gameUI">
+            <canvas id="gameCanvas" width="800" height="500"></canvas>
+            <div class="ui">
+                <div class="score-display">Score: <span id="score">0</span></div>
+                <div class="time-display">Time: <span id="time">0</span>s</div>
+                <div class="objects-left">Objects Left: <span id="objectsLeft">10</span></div>
+            </div>
+        </div>
+        
+        <div class="game-over-screen" id="gameOverScreen">
+            <h1>Game Over!</h1>
+            <p>Your Score: <span id="finalScore">0</span></p>
+            <p>Time Taken: <span id="finalTime">0</span>s</p>
+            <button id="restartButton">Play Again</button>
+        </div>
+    </div>
+    
+    <!-- Sound Effects -->
+    <audio id="collectSound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" preload="auto"></audio>
+    <audio id="obstacleSound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3" preload="auto"></audio>
+    <audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
+    
+    <script src="game.js"></script>
+</body>
+</html>
