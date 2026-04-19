@@ -187,13 +187,30 @@ function drawDino() {
 function drawObjects() {
     objects.forEach(obj => {
         const bobY = Math.sin(elapsedTime * 3 + obj.bobOffset) * 4;
+        const centerX = obj.x + 15;
+        const centerY = obj.y + 14 + bobY;
+
         ctx.beginPath();
-        ctx.fillStyle = "rgba(255,255,255,0.72)";
-        ctx.arc(obj.x + 15, obj.y + 14 + bobY, 20, 0, Math.PI * 2);
+        const halo = ctx.createRadialGradient(centerX, centerY, 4, centerX, centerY, 24);
+        halo.addColorStop(0, "rgba(255,255,255,0.98)");
+        halo.addColorStop(0.6, "rgba(255,245,157,0.95)");
+        halo.addColorStop(1, "rgba(255,255,255,0.35)");
+        ctx.fillStyle = halo;
+        ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
         ctx.fill();
-        ctx.font = "29px Arial";
-        ctx.fillStyle = "#000";
-        ctx.fillText(obj.emoji, obj.x, obj.y + 24 + bobY);
+
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(255,255,255,0.95)";
+        ctx.lineWidth = 3;
+        ctx.arc(centerX, centerY, 21, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.font = "31px Arial";
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "rgba(45, 35, 66, 0.45)";
+        ctx.strokeText(obj.emoji, obj.x, obj.y + 25 + bobY);
+        ctx.fillStyle = "#111";
+        ctx.fillText(obj.emoji, obj.x, obj.y + 25 + bobY);
     });
 }
 
