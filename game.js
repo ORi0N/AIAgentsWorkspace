@@ -20,11 +20,11 @@ const winSound = document.getElementById("winSound");
 const dino = {
     x: 120,
     y: 280,
-    width: 44,
-    height: 44,
-    speed: 4.6,
+    width: 58,
+    height: 58,
+    speed: 4.8,
     emoji: "🦖",
-    hitboxInset: 10
+    hitboxInset: 14
 };
 
 let objects = [];
@@ -180,8 +180,26 @@ function drawBackground() {
 }
 
 function drawDino() {
-    ctx.font = "34px Arial";
-    ctx.fillText(dino.emoji, dino.x, dino.y + 30);
+    const pulse = 0.7 + 0.3 * Math.sin(elapsedTime * 9);
+    const glowRadius = 20 + pulse * 10;
+    const centerX = dino.x + dino.width / 2;
+    const centerY = dino.y + dino.height / 2;
+
+    const glow = ctx.createRadialGradient(centerX, centerY, 6, centerX, centerY, glowRadius + 18);
+    glow.addColorStop(0, `rgba(255,255,255,${0.95 * pulse})`);
+    glow.addColorStop(0.55, `rgba(255,255,120,${0.55 * pulse})`);
+    glow.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, glowRadius + 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.font = "48px Arial";
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = `rgba(255,255,255,${0.9 * pulse})`;
+    ctx.strokeText(dino.emoji, dino.x - 2, dino.y + 42);
+    ctx.fillStyle = "#183153";
+    ctx.fillText(dino.emoji, dino.x - 2, dino.y + 42);
 }
 
 function drawObjects() {
