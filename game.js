@@ -32,8 +32,8 @@ let obstacles = [];
 let sparkles = [];
 
 const objectCount = 10;
-const objectSize = 28;
-const objectEmojis = ["🍎", "🍌", "🍒", "💎", "🪙", "⭐", "🎁"];
+const objectSize = 30;
+const objectEmojis = ["🍎", "🍌", "🍒", "💎", "🪙", "⭐", "🎁", "🎈"];
 
 const obstacleCount = 8;
 const obstacleEmojis = ["🪨", "🌳", "🔥"];
@@ -100,7 +100,8 @@ function spawnItems(count, kind) {
                 height: isObstacle ? 38 : objectSize,
                 emoji: isObstacle
                     ? obstacleEmojis[Math.floor(Math.random() * obstacleEmojis.length)]
-                    : objectEmojis[Math.floor(Math.random() * objectEmojis.length)]
+                    : objectEmojis[Math.floor(Math.random() * objectEmojis.length)],
+                bobOffset: random(0, Math.PI * 2)
             };
             attempts++;
         } while (
@@ -173,9 +174,9 @@ function drawBackground() {
     }
 
     ctx.font = "26px Arial";
-    ctx.fillText("🎈", 46, 58);
     ctx.fillText("🎊", 830, 62);
     ctx.fillText("✨", 460, 70);
+    ctx.fillText("🎉", 46, 58);
 }
 
 function drawDino() {
@@ -185,8 +186,14 @@ function drawDino() {
 
 function drawObjects() {
     objects.forEach(obj => {
-        ctx.font = "28px Arial";
-        ctx.fillText(obj.emoji, obj.x, obj.y + 24);
+        const bobY = Math.sin(elapsedTime * 3 + obj.bobOffset) * 4;
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255,255,255,0.72)";
+        ctx.arc(obj.x + 15, obj.y + 14 + bobY, 20, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = "29px Arial";
+        ctx.fillStyle = "#000";
+        ctx.fillText(obj.emoji, obj.x, obj.y + 24 + bobY);
     });
 }
 
@@ -261,7 +268,7 @@ function updateGame(deltaTime) {
     const dinoBox = createBounds(dino, dino.hitboxInset);
 
     objects = objects.filter(obj => {
-        if (intersects(dinoBox, createBounds(obj, 7))) {
+        if (intersects(dinoBox, createBounds(obj, 4))) {
             score += 10;
             objectsCollected += 1;
             scoreDisplay.textContent = score;
