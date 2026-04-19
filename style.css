@@ -1,63 +1,49 @@
+:root {
+    --bg1: #fff3b0;
+    --bg2: #ffd6e8;
+    --bg3: #c9f9ff;
+    --panel: rgba(255, 255, 255, 0.82);
+    --ink: #2d2342;
+    --accent: #ff6b6b;
+    --accent-2: #6c5ce7;
+    --success: #00b894;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    padding: 0;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    padding: 24px;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.75) 0 8%, transparent 9%),
+        radial-gradient(circle at 85% 22%, rgba(255,255,255,0.5) 0 7%, transparent 8%),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.45) 0 9%, transparent 10%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 48%, var(--bg3));
     font-family: Arial, sans-serif;
+    color: var(--ink);
     touch-action: manipulation;
 }
 
 .game-container {
-    text-align: center;
+    width: min(96vw, 960px);
     position: relative;
+    text-align: center;
 }
 
 #gameCanvas {
-    border: 2px solid #333;
-    background-color: #fff;
-    display: none;
-}
-
-.start-screen, .game-over-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    z-index: 10;
-}
-
-.start-screen h1, .game-over-screen h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-}
-
-.start-screen p, .game-over-screen p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
+    max-width: 900px;
+    border: 4px solid rgba(255,255,255,0.9);
+    border-radius: 22px;
+    box-shadow: 0 22px 60px rgba(77, 52, 118, 0.25);
+    background: linear-gradient(180deg, #8ee3ff 0%, #9ef0b8 58%, #ffd782 100%);
+    display: none;
 }
 
 .game-ui {
@@ -65,20 +51,98 @@ button:hover {
 }
 
 .ui {
-    margin-top: 10px;
+    margin-top: 14px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
     font-size: 18px;
-    color: #333;
 }
 
-.score-display, .time-display, .objects-left {
-    padding: 5px 10px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    margin: 0 5px;
+.stat-card {
+    padding: 10px 16px;
+    background: var(--panel);
+    border-radius: 999px;
+    box-shadow: 0 10px 25px rgba(54, 36, 88, 0.15);
+    min-width: 160px;
+    font-weight: 700;
+}
+
+.touch-hint {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #4f4068;
+}
+
+.overlay-card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: rgba(45, 35, 66, 0.45);
+    backdrop-filter: blur(5px);
+    border-radius: 28px;
+    z-index: 10;
+}
+
+.overlay-inner {
+    width: min(92%, 560px);
+    padding: 36px 28px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+    border-radius: 28px;
+    box-shadow: 0 24px 50px rgba(40, 23, 65, 0.25);
+}
+
+.start-screen h1, .game-over-screen h1 {
+    margin: 0 0 16px;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.start-screen p, .game-over-screen p {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    margin: 0 0 16px;
+}
+
+button {
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 12px 25px rgba(108, 92, 231, 0.3);
+}
+
+button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+}
+
+button:active {
+    transform: translateY(1px);
 }
 
 #gameOverScreen {
     display: none;
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 10px;
+    }
+
+    .overlay-inner {
+        padding: 26px 18px;
+    }
+
+    .stat-card {
+        min-width: 130px;
+        font-size: 16px;
+    }
 }
